@@ -34,7 +34,7 @@ app.get("/health", (req, res) => {
 app.post("/api/classify-text", async (req, res) => {
   try {
     const { text, prompt } = req.body;
-    
+
     if (!text) {
       return res.status(400).json({
         error: "No text provided",
@@ -46,7 +46,9 @@ app.post("/api/classify-text", async (req, res) => {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     // Create the classification prompt
-    const classificationPrompt = prompt || `
+    const classificationPrompt =
+      prompt ||
+      `
     Classify the following text and provide a JSON response with:
     {
       "category": "food-related category",
@@ -90,7 +92,7 @@ app.post("/api/classify-text", async (req, res) => {
       message: error.message,
       code: error.code,
       status: error.status,
-      stack: error.stack
+      stack: error.stack,
     });
 
     res.json({
@@ -98,7 +100,7 @@ app.post("/api/classify-text", async (req, res) => {
       classification: null,
       error: "Text classification failed",
       message: "AI service temporarily unavailable",
-      details: error.message
+      details: error.message,
     });
   }
 });
@@ -203,7 +205,7 @@ app.post("/api/detect-food", upload.single("image"), async (req, res) => {
       message: error.message,
       code: error.code,
       status: error.status,
-      stack: error.stack
+      stack: error.stack,
     });
 
     // Return fallback suggestions for common foods
@@ -230,7 +232,7 @@ app.post("/api/detect-food", upload.single("image"), async (req, res) => {
       suggestions: fallbackSuggestions,
       error: "AI processing failed, showing fallback suggestions",
       message: "AI service temporarily unavailable",
-      details: error.message
+      details: error.message,
     });
   }
 });
